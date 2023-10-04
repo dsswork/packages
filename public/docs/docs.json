@@ -1,0 +1,583 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Packages Api",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "tags": [
+        {
+            "name": "AUTH",
+            "description": "Register and login"
+        },
+        {
+            "name": "USER",
+            "description": "User info"
+        },
+        {
+            "name": "POSTS",
+            "description": "Operations about posts for user"
+        },
+        {
+            "name": "PACKAGES",
+            "description": "Operations about packages for user"
+        },
+        {
+            "name": "ADMIN PACKAGES",
+            "description": "Operations about packages for admin"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Register new user",
+                "description": "Register new user",
+                "operationId": "register-user",
+                "requestBody": {
+                    "description": "Register new user",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Taras Shevchenko"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "taras-shevchenko@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secret1234"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Login user",
+                "description": "Login user",
+                "operationId": "Login-user",
+                "requestBody": {
+                    "description": "Login user",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "taras-shevchenko@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secret1234"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts": {
+            "get": {
+                "tags": [
+                    "POSTS"
+                ],
+                "summary": "Get all posts",
+                "description": "Get all posts",
+                "operationId": "get-posts",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                },
+                "security": [
+
+                ]
+            },
+            "post": {
+                "tags": [
+                    "POSTS"
+                ],
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "summary": "Create post",
+                "description": "Create post",
+                "operationId": "create-post",
+                "requestBody": {
+                    "description": "Create post",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Post title"
+                                    },
+                                    "Body": {
+                                        "type": "string",
+                                        "example": "Post body"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{id}/activate": {
+            "put": {
+                "tags": [
+                    "POSTS"
+                ],
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "summary": "Activate post",
+                "description": "Activate post",
+                "operationId": "activate-post",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/posts": {
+            "get": {
+                "tags": [
+                    "USER"
+                ],
+                "summary": "Get user's posts",
+                "description": "Get user's posts",
+                "operationId": "get-users-posts",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/packages": {
+            "get": {
+                "tags": [
+                    "PACKAGES"
+                ],
+                "summary": "Get all packages",
+                "description": "Get all packages",
+                "operationId": "get-user-packages",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+
+                            }
+                        }
+                    }
+                },
+                "security": [
+
+                ]
+            }
+        },
+        "/user/packages": {
+            "get": {
+                "tags": [
+                    "USER"
+                ],
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "summary": "Get user's active package",
+                "description": "Get user's active package",
+                "operationId": "Get user's active package",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/packages/{id}/buy": {
+            "post": {
+                "tags": [
+                    "PACKAGES"
+                ],
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "summary": "Buy package",
+                "description": "Buy package",
+                "operationId": "buy-package",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Pckage ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/packages": {
+            "get": {
+                "tags": [
+                    "ADMIN PACKAGES"
+                ],
+                "summary": "Get all packages",
+                "description": "Get all packages",
+                "operationId": "get-packages",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "ADMIN PACKAGES"
+                ],
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "summary": "Create package",
+                "description": "Create package",
+                "operationId": "create-package",
+                "requestBody": {
+                    "description": "Create package",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Small package"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 50.99
+                                    },
+                                    "publications": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/packages/{id}": {
+            "get": {
+                "tags": [
+                    "ADMIN PACKAGES"
+                ],
+                "summary": "Show package",
+                "description": "Show package",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Package ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "operationId": "show-package",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "ADMIN PACKAGES"
+                ],
+                "summary": "Update package",
+                "description": "Update package",
+                "operationId": "update-package",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Package ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Create package",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Small package"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 50.99
+                                    },
+                                    "publications": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "ADMIN PACKAGES"
+                ],
+                "summary": "Delete package",
+                "description": "Delete package",
+                "operationId": "delete-package",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Package ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Authorization": {
+                "name": "Authorization",
+                "type": "apiKey",
+                "in": "header"
+            }
+        }
+    }
+}
