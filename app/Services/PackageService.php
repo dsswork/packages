@@ -18,7 +18,7 @@ class PackageService
 
     public function buy(int $id): JsonResponse
     {
-        $activePackages = auth()->user()->packages()->wherePivot('created_at', '>', now()->subDays(30))->exists();
+        $activePackages = auth()->user()->actualPackages()->exists();
         if($activePackages) {
             return ApiAnswerService::errorAnswer('You have active package', 404);
         }
@@ -31,7 +31,7 @@ class PackageService
     public function current()
     {
         $package = auth()->user()->actualPackages()->firstOrFail();
-        $package->buy_date =  $package->pivot->created_at->format('d.m.Y');
+        $package->buy_date = $package->pivot->created_at->format('d.m.Y');
         $package->publications_lost = $package->pivot->publications;
         unset($package->pivot);
         return ApiAnswerService::successfulAnswerWithData($package->toArray());

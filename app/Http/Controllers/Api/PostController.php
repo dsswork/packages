@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\DTO\PostData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\AuthorIdRequest;
 use App\Http\Requests\Api\PostRequest;
 use App\Models\Post;
 use App\Services\ApiAnswerService;
@@ -20,9 +21,9 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(AuthorIdRequest $request)
     {
-        $posts = $this->postService->all();
+        $posts = $this->postService->all($request->author);
         return ApiAnswerService::successfulAnswerWithData($posts);
     }
 

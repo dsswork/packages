@@ -59,6 +59,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Package::class)
             ->withPivot('created_at', 'publications')
+            ->wherePivot('publications', '>', 0)
             ->wherePivot('created_at', '>', now()->subMonth());
     }
 }

@@ -10,10 +10,16 @@ use App\Models\Post;
 class PostService
 {
 
-    public function all(): array
+    public function all(int|null $authorId): array
     {
-        $posts = Post::active()->latest()->paginate(PostController::PER_PAGE);
+        $posts = Post::active()
+            ->when($authorId, function ($query) use ($authorId){
+                $query->where('user_id', $authorId);
+            })
+            ->latest()->paginate(PostController::PER_PAGE);
+
         $postsArray = PostCollection::make($posts)->resolve();
+
         return $postsArray;
     }
 
@@ -54,6 +60,7 @@ class PostService
             'publications' => $publications
         ]]);
 
-        return ApiAnswerService::successfulAnswerWithData($post->toArray());
+        return ApiAnswerService::successfulAnswerWithData(
+            $post->toArray() + ['publications_lost' => $publications]);
     }
 }

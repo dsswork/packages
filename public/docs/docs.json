@@ -133,6 +133,15 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "Author ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -171,7 +180,7 @@
                                         "type": "string",
                                         "example": "Post title"
                                     },
-                                    "Body": {
+                                    "body": {
                                         "type": "string",
                                         "example": "Post body"
                                     }

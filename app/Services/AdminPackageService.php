@@ -30,7 +30,7 @@ class AdminPackageService
 
     public function delete(Package $package)
     {
-        if($package->users()->wherePivot('created_at', '>', now()->subDays(30))->exists()) {
+        if($package->users()->activePackages()->exists()) {
             return ApiAnswerService::errorAnswer('This package used by users', 409);
         }
         $package->delete();
