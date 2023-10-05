@@ -7,7 +7,7 @@
 
 
 ### Base Settings
-1. Run git clone https://github.com/dsswork/todo-list.git
+1. Run git clone https://github.com/dsswork/packages.git
 2. Run cp .env.example .env
 3. Set up your settings in .env:
     - DOCKER_NGINX_PORT
